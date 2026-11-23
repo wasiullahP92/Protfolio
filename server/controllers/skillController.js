@@ -104,3 +104,4 @@ export const deleteSkill = async (req, res, next) => {
     next(error);
   }
 };
+

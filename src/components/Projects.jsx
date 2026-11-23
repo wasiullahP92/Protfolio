@@ -1,19 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, Sparkles, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
-import { projectsData } from '../data/portfolioData';
+import { projectsData as fallbackProjects } from '../data/portfolioData';
+import { api } from '../utils/api';
 import ProjectModal from './ProjectModal';
 
+// Helper to format image paths (handles local multer uploads)
+export const resolveImageUrl = (img) => {
+  if (!img) return '';
+  if (img.startsWith('/uploads/')) {
+    const backendUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+    return `${backendUrl}${img}`;
+  }
+  return img;
+};
+
 export default function Projects() {
+  const [projects, setProjects] = useState(fallbackProjects);
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Fetch live projects from backend MongoDB
+  useEffect(() => {
+    const fetchLiveProjects = async () => {
+      try {
+        const res = await api.getProjects();
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          // Normalize backend projects
+          const normalized = res.data.map((p) => ({
+            id: p._id,
+            title: p.title,
+            category: p.category,
+            tagline: p.shortDescription,
+            description: p.fullDescription || p.shortDescription,
+            image: resolveImageUrl(p.image),
+            technologies: p.technologies || [],
+            features: [
+              'Custom responsive component architecture',
+              'Performance and SEO Core Web Vitals optimization',
+              'Cross-browser and mobile device compatibility',
+            ],
+            liveUrl: p.liveUrl || 'https://example.com',
+            githubUrl: p.githubUrl || 'https://github.com',
+            featured: p.featured,
+            stats: { speed: '96 / 100', loadTime: '1.2s', responsive: '100%' },
+          }));
+          setProjects(normalized);
+        }
+      } catch {
+        // Fallback to static portfolioData seamlessly if backend is offline
+      }
+    };
+
+    fetchLiveProjects();
+  }, []);
+
   const categories = ['All', 'WordPress', 'E-Commerce', 'Web Design'];
 
   const filteredProjects = activeCategory === 'All'
-    ? projectsData
-    : projectsData.filter((p) => p.category.toLowerCase() === activeCategory.toLowerCase());
+    ? projects
+    : projects.filter((p) => p.category.toLowerCase() === activeCategory.toLowerCase());
 
   const handleOpenModal = (project) => {
     setSelectedProject(project);

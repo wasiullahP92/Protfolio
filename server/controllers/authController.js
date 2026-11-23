@@ -90,3 +90,81 @@ export const logoutAdmin = async (req, res) => {
     message: 'Logged out successfully. Token discarded on client.',
   });
 };
+
+// @desc    Update admin profile (name, email)
+// @route   PUT /api/auth/profile
+// @access  Private (Admin)
+export const updateAdminProfile = async (req, res, next) => {
+  try {
+    const admin = await Admin.findById(req.admin._id);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: 'Admin not found',
+      });
+    }
+
+    if (req.body.name) admin.name = req.body.name.trim();
+    if (req.body.email) admin.email = req.body.email.toLowerCase().trim();
+
+    const updatedAdmin = await admin.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Admin profile updated successfully',
+      admin: {
+        id: updatedAdmin._id,
+        name: updatedAdmin.name,
+        email: updatedAdmin.email,
+        createdAt: updatedAdmin.createdAt,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Update admin password
+// @route   PUT /api/auth/password
+// @access  Private (Admin)
+export const updateAdminPassword = async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide both current and new passwords',
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password must be at least 6 characters long',
+      });
+    }
+
+    const admin = await Admin.findById(req.admin._id).select('+password');
+
+    const isMatch = await admin.matchPassword(currentPassword);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Current password is incorrect',
+      });
+    }
+
+    admin.password = newPassword;
+    await admin.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password updated successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+

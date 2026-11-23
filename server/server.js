@@ -15,6 +15,7 @@ import projectRoutes from './routes/projectRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
 import experienceRoutes from './routes/experienceRoutes.js';
 import educationRoutes from './routes/educationRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 
 // Setup file paths
 const __filename = fileURLToPath(import.meta.url);
@@ -76,6 +77,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/experience', experienceRoutes);
 app.use('/api/education', educationRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);
@@ -108,3 +110,4 @@ const startServer = async () => {
 startServer();
 
 export default app;
+

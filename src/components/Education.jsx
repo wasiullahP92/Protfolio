@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GraduationCap, Sparkles } from 'lucide-react';
-import { educationData } from '../data/portfolioData';
+import { educationData as defaultEdu } from '../data/portfolioData';
+import { api } from '../utils/api';
 
 export default function Education() {
+  const [educationData, setEducationData] = useState(defaultEdu);
+
+  useEffect(() => {
+    const fetchLiveEducation = async () => {
+      try {
+        const res = await api.getEducation();
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          const normalized = res.data.map((item) => ({
+            degree: item.degree,
+            institution: item.institution,
+            period: item.startDate && item.endDate ? `${item.startDate} – ${item.endDate}` : 'Completed',
+            field: 'Information Technology & Computer Sciences',
+            description: item.description,
+            highlights: ['Technical Training', 'Academic Discipline', 'Core Computing'],
+          }));
+          setEducationData(normalized);
+        }
+      } catch {
+        // Fallback
+      }
+    };
+
+    fetchLiveEducation();
+  }, []);
   return (
     <section id="education" className="py-24 relative overflow-hidden">
       {/* Background ambient lighting */}

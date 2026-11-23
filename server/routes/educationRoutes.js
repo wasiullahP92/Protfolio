@@ -20,3 +20,4 @@ router.route('/:id')
   .delete(protect, deleteEducation);
 
 export default router;
+

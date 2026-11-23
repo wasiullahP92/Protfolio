@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X, FileDown, ShieldCheck } from 'lucide-react';
 
 export default function Navbar({ onOpenCV }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -102,8 +103,8 @@ export default function Navbar({ onOpenCV }) {
           })}
         </nav>
 
-        {/* Header Action: Download CV */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Header Action: Download CV & Admin */}
+        <div className="hidden sm:flex items-center gap-2.5">
           <button
             onClick={onOpenCV}
             className="group relative inline-flex items-center gap-2 px-4 py-2 text-xs lg:text-sm font-semibold rounded-full text-white bg-slate-900 border border-slate-700/80 hover:border-accent-purple transition-all duration-300 shadow-sm hover:shadow-glow-purple overflow-hidden"
@@ -112,6 +113,14 @@ export default function Navbar({ onOpenCV }) {
             <FileDown className="w-4 h-4 text-accent-electric group-hover:-translate-y-0.5 transition-transform duration-200" />
             <span className="relative">Download CV</span>
           </button>
+
+          <Link
+            to="/admin"
+            className="p-2 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-accent-electric transition"
+            title="Private Admin Console"
+          >
+            <ShieldCheck className="w-4 h-4" />
+          </Link>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -160,7 +169,7 @@ export default function Navbar({ onOpenCV }) {
               );
             })}
 
-            <div className="pt-4 mt-2 border-t border-slate-800/80 flex flex-col gap-3">
+            <div className="pt-4 mt-2 border-t border-slate-800/80 flex flex-col gap-2">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -171,6 +180,15 @@ export default function Navbar({ onOpenCV }) {
                 <FileDown className="w-4 h-4" />
                 <span>View & Download CV</span>
               </button>
+
+              <Link
+                to="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-mono rounded-xl text-slate-300 bg-dark-850 border border-slate-800"
+              >
+                <ShieldCheck className="w-4 h-4 text-accent-electric" />
+                <span>Admin Dashboard Login</span>
+              </Link>
             </div>
           </div>
         </div>

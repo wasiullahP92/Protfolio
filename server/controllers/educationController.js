@@ -117,3 +117,4 @@ export const deleteEducation = async (req, res, next) => {
     next(error);
   }
 };
+

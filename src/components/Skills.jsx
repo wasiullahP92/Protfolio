@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Globe, 
   Layout, 
@@ -12,7 +12,8 @@ import {
   Boxes, 
   Sparkles
 } from 'lucide-react';
-import { skillsData } from '../data/portfolioData';
+import { skillsData as defaultSkills } from '../data/portfolioData';
+import { api } from '../utils/api';
 
 // Icon mapping helper
 const iconMap = {
@@ -30,6 +31,51 @@ const iconMap = {
 
 export default function Skills() {
   const [filter, setFilter] = useState('all');
+  const [skillsData, setSkillsData] = useState(defaultSkills);
+
+  useEffect(() => {
+    const fetchLiveSkills = async () => {
+      try {
+        const res = await api.getSkills();
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          const core = [];
+          const learning = [];
+
+          res.data.forEach((s) => {
+            if (s.category === 'Expanding Stack' || s.category.toLowerCase().includes('learning')) {
+              learning.push({
+                name: s.name,
+                progress: s.level,
+                icon: s.icon || 'Code2',
+                description: s.description || `${s.name} modern development practices`,
+                tag: s.category,
+              });
+            } else {
+              core.push({
+                name: s.name,
+                category: s.category,
+                level: s.level,
+                icon: s.icon || 'Globe',
+                highlight: s.description || `Core proficiency in ${s.name} architecture & delivery`,
+                status: 'Core Competency',
+              });
+            }
+          });
+
+          if (core.length > 0 || learning.length > 0) {
+            setSkillsData({
+              core: core.length > 0 ? core : defaultSkills.core,
+              learning: learning.length > 0 ? learning : defaultSkills.learning,
+            });
+          }
+        }
+      } catch {
+        // Fallback to default
+      }
+    };
+
+    fetchLiveSkills();
+  }, []);
 
   return (
     <section id="skills" className="py-24 relative overflow-hidden">

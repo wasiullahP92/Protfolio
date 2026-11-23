@@ -190,3 +190,4 @@ Authorization: Bearer <your_jwt_token_here>
 | `POST` | `/api/education` | Protected | Add education entry |
 | `PUT` | `/api/education/:id` | Protected | Update education entry |
 | `DELETE` | `/api/education/:id` | Protected | Delete education entry |
+

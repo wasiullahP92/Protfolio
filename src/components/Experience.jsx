@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, CheckCircle2, Building, Sparkles } from 'lucide-react';
-import { experienceData } from '../data/portfolioData';
+import { experienceData as defaultExp } from '../data/portfolioData';
+import { api } from '../utils/api';
 
 export default function Experience() {
+  const [experienceData, setExperienceData] = useState(defaultExp);
+
+  useEffect(() => {
+    const fetchLiveExperience = async () => {
+      try {
+        const res = await api.getExperience();
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          const normalized = res.data.map((item) => ({
+            role: item.jobTitle,
+            company: item.company,
+            period: `${item.startDate} – ${item.endDate || 'Present'}`,
+            type: 'Verified Milestone',
+            location: 'Peshawar, Pakistan / Remote',
+            description: item.description,
+            achievements: item.achievements || [],
+            skills: ['WordPress', 'Elementor', 'Web Development'],
+          }));
+          setExperienceData(normalized);
+        }
+      } catch {
+        // Fallback
+      }
+    };
+
+    fetchLiveExperience();
+  }, []);
   return (
     <section id="experience" className="py-24 relative overflow-hidden bg-dark-900/30">
       {/* Background ambient lighting */}

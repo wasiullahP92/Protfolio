@@ -18,3 +18,4 @@ router.route('/:id')
   .delete(protect, deleteSkill);
 
 export default router;
+

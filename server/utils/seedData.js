@@ -7,6 +7,7 @@ import Project from '../models/Project.js';
 import Skill from '../models/Skill.js';
 import Experience from '../models/Experience.js';
 import Education from '../models/Education.js';
+import Message from '../models/Message.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -163,6 +164,29 @@ export const seedDatabase = async () => {
       console.log(`[Seed] Inserted ${initialProjects.length} initial projects`);
     }
 
+    // 6. Ensure Messages exist
+    const msgCount = await Message.countDocuments();
+    if (msgCount === 0) {
+      const initialMessages = [
+        {
+          name: 'Sarah Jenkins',
+          email: 'sarah.j@techvision.io',
+          subject: 'WordPress E-Commerce Redesign Project',
+          message: 'Hello Wasi! We love your portfolio projects. We have a WooCommerce store with 150+ products that needs a complete UI revamp, responsive tuning, and speed optimization. What is your current availability for a discovery call?',
+          isRead: false,
+        },
+        {
+          name: 'Ahmed Malik',
+          email: 'ahmed.m@apexgroup.pk',
+          subject: 'Corporate Website & Maintenance Contract',
+          message: 'Hi Wasi Ullah, we are looking for a reliable WordPress developer to build our consulting corporate site and maintain our existing client web properties. Please share your project rate card.',
+          isRead: true,
+        },
+      ];
+      await Message.insertMany(initialMessages);
+      console.log(`[Seed] Inserted ${initialMessages.length} initial messages`);
+    }
+
     console.log('[Seed] Database initialization complete!');
   } catch (err) {
     console.error('[Seed Error]:', err.message);
@@ -195,3 +219,4 @@ if (process.argv[1] && process.argv[1].endsWith('seedData.js')) {
       process.exit(1);
     });
 }
+
