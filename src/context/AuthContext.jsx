@@ -9,6 +9,24 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const login = async (email, password) => {
+    setError(null);
+    try {
+      const data = await api.login({ email, password });
+      if (data && data.token) {
+        setToken(data.token);
+        setTokenState(data.token);
+        setAdmin(data.admin);
+        return { success: true, admin: data.admin };
+      }
+      return { success: false, error: data?.message || 'Login failed' };
+    } catch (err) {
+      const errorMsg = err.message || 'Invalid credentials';
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
+    }
+  };
+
   const logout = async () => {
     try {
       await api.logout();

@@ -16,32 +16,43 @@ export default function Hero({ onOpenCV }) {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Intro timeline
+      // Intro timeline using fromTo to avoid React 19 StrictMode double-mount 0-opacity trap
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.from(badgeRef.current, {
-        y: -20,
-        opacity: 0,
-        duration: 0.6,
-        delay: 0.2,
-      })
-      .from(titleRef.current.children, {
-        y: 35,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.15,
-      }, '-=0.3')
-      .from(actionsRef.current.children, {
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
-      }, '-=0.3')
-      .from(visualRef.current, {
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.8,
-      }, '-=0.5');
+      if (badgeRef.current) {
+        tl.fromTo(
+          badgeRef.current,
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, delay: 0.1, clearProps: 'transform' }
+        );
+      }
+
+      if (titleRef.current && titleRef.current.children.length) {
+        tl.fromTo(
+          titleRef.current.children,
+          { y: 35, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, stagger: 0.15, clearProps: 'transform' },
+          '-=0.3'
+        );
+      }
+
+      if (actionsRef.current && actionsRef.current.children.length) {
+        tl.fromTo(
+          actionsRef.current.children,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, clearProps: 'transform' },
+          '-=0.3'
+        );
+      }
+
+      if (visualRef.current) {
+        tl.fromTo(
+          visualRef.current,
+          { scale: 0.9, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.8, clearProps: 'transform' },
+          '-=0.5'
+        );
+      }
 
       // Floating subtle animations for micro-cards
       gsap.to('.hero-float-1', {
