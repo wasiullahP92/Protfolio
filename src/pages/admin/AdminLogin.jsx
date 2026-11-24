@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, ArrowLeft, Sparkles, AlertCircle } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export default function AdminLogin() {
@@ -15,12 +15,6 @@ export default function AdminLogin() {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/admin';
-
-  const handleFillDemo = () => {
-    setEmail('wasiwebsolution@gmail.com');
-    setPassword('AdminSecurePass123!');
-    setLocalError('');
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,9 +83,8 @@ export default function AdminLogin() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Field */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-slate-300 flex items-center justify-between">
-                <span>Admin Email</span>
-                <span className="text-[11px] text-slate-500 font-mono">wasiwebsolution@gmail.com</span>
+              <label className="text-xs font-medium text-slate-300">
+                Admin Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
@@ -152,18 +145,6 @@ export default function AdminLogin() {
                 </>
               )}
             </button>
-
-            {/* Quick Demo Autofill Helper */}
-            <div className="pt-2 border-t border-slate-800 text-center">
-              <button
-                type="button"
-                onClick={handleFillDemo}
-                className="inline-flex items-center gap-1.5 text-xs text-accent-electric hover:underline font-mono"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Autofill Default Admin Credentials</span>
-              </button>
-            </div>
           </form>
         </div>
 
