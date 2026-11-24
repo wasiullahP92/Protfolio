@@ -1,44 +1,31 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useLocation } from 'react-router-dom';
 
 export default function PageTransition() {
   const overlayRef = useRef(null);
   const location = useLocation();
-  const isFirstMount = useRef(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevPath = useRef(location.pathname);
 
   useEffect(() => {
-    // Skip animation on initial page load so the screen is NEVER blocked
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
+    // Only trigger when path ACTUALLY changes to a different route
+    if (prevPath.current === location.pathname) {
       return;
     }
+    prevPath.current = location.pathname;
 
-    const el = overlayRef.current;
-    if (!el) return;
+    setIsTransitioning(true);
 
-    const panels = el.querySelectorAll('.transition-column');
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 900);
 
-      // Only wipe during route navigation
-      tl.set(panels, { yPercent: -100 })
-        .to(panels, {
-          yPercent: 0,
-          duration: 0.35,
-          stagger: 0.04,
-          ease: 'power3.inOut',
-        })
-        .to(panels, {
-          yPercent: 100,
-          duration: 0.4,
-          stagger: 0.04,
-          ease: 'power3.inOut',
-        }, '+=0.05');
-    }, overlayRef);
-
-    return () => ctx.revert();
+    return () => clearTimeout(timer);
   }, [location.pathname]);
+
+  // If not transitioning between pages, do NOT render any overlay elements
+  if (!isTransitioning) return null;
 
   return (
     <div
@@ -48,7 +35,7 @@ export default function PageTransition() {
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
-          className="transition-column flex-1 h-full bg-[#06070b] border-r border-accent-purple/10 transform -translate-y-full"
+          className="transition-column flex-1 h-full bg-[#06070b] border-r border-accent-purple/10 animate-pulse"
         />
       ))}
     </div>
