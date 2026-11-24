@@ -157,3 +157,4 @@ export const deleteTraining = async (req, res, next) => {
     next(error);
   }
 };
+

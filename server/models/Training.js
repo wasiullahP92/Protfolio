@@ -61,3 +61,4 @@ const trainingSchema = new mongoose.Schema(
 
 const Training = mongoose.model('Training', trainingSchema);
 export default Training;
+

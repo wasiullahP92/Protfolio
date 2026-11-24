@@ -14,3 +14,4 @@ router.route('/').get(getTrainings).post(protect, createTraining);
 router.route('/:id').get(getTrainingById).put(protect, updateTraining).delete(protect, deleteTraining);
 
 export default router;
+
