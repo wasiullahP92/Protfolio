@@ -49,7 +49,7 @@ function PublicPortfolio() {
   const [preloaderDone, setPreloaderDone] = useState(false);
 
   return (
-    <div className="min-h-screen bg-dark-950 text-slate-100 relative selection:bg-accent-violet selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-dark-950 text-slate-100 relative selection:bg-accent-violet selection:text-white">
       {/* 10. Website Preloader with Progress Counter and Dual Curtain Reveal */}
       <Preloader onComplete={() => setPreloaderDone(true)} />
 

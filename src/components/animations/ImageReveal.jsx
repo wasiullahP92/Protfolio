@@ -9,7 +9,6 @@ export default function ImageReveal({
   alt = '',
   className = '',
   containerClassName = '',
-  overlayColor = 'bg-accent-purple',
   aspectRatio = 'aspect-[16/10]',
 }) {
   const containerRef = useRef(null);
@@ -23,13 +22,16 @@ export default function ImageReveal({
     if (!container || !image || !curtain) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced) {
+      curtain.style.display = 'none';
+      return;
+    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: 'top 85%',
+          start: 'top 88%',
           once: true,
         },
       });
@@ -37,13 +39,13 @@ export default function ImageReveal({
       tl.fromTo(
         curtain,
         { scaleY: 1, transformOrigin: 'top' },
-        { scaleY: 0, duration: 1.1, ease: 'expo.inOut' }
+        { scaleY: 0, duration: 0.9, ease: 'expo.inOut', onComplete: () => { curtain.style.display = 'none'; } }
       )
       .fromTo(
         image,
-        { scale: 1.25, filter: 'blur(8px)' },
-        { scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' },
-        '<0.2'
+        { scale: 1.15, filter: 'blur(4px)' },
+        { scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power2.out' },
+        '<0.15'
       );
     }, container);
 
@@ -67,10 +69,10 @@ export default function ImageReveal({
       {/* Unveiling Curtain Overlay */}
       <div
         ref={curtainRef}
-        className={`absolute inset-0 z-20 origin-top pointer-events-none bg-gradient-to-b from-[#11131f] via-dark-900 to-[#0c0d16]`}
+        className="absolute inset-0 z-20 origin-top pointer-events-none bg-[#090b14]"
       />
 
-      {/* Cyber Shimmer Line */}
+      {/* Ambient hover light */}
       <div className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-tr from-accent-purple/10 via-transparent to-accent-electric/15" />
     </div>
   );

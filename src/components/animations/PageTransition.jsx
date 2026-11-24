@@ -5,8 +5,15 @@ import { useLocation } from 'react-router-dom';
 export default function PageTransition() {
   const overlayRef = useRef(null);
   const location = useLocation();
+  const isFirstMount = useRef(true);
 
   useEffect(() => {
+    // Skip animation on initial page load so the screen is NEVER blocked
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+
     const el = overlayRef.current;
     if (!el) return;
 
@@ -14,22 +21,20 @@ export default function PageTransition() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      // Drop in from top
-      tl.set(el, { pointerEvents: 'auto' })
-        .set(panels, { yPercent: -100 })
+      // Only wipe during route navigation
+      tl.set(panels, { yPercent: -100 })
         .to(panels, {
           yPercent: 0,
-          duration: 0.45,
-          stagger: 0.05,
+          duration: 0.35,
+          stagger: 0.04,
           ease: 'power3.inOut',
         })
         .to(panels, {
           yPercent: 100,
-          duration: 0.5,
-          stagger: 0.05,
+          duration: 0.4,
+          stagger: 0.04,
           ease: 'power3.inOut',
-        }, '+=0.05')
-        .set(el, { pointerEvents: 'none' });
+        }, '+=0.05');
     }, overlayRef);
 
     return () => ctx.revert();
@@ -43,7 +48,7 @@ export default function PageTransition() {
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
-          className="transition-column flex-1 h-full bg-[#07080e] border-r border-accent-purple/10 transform -translate-y-full"
+          className="transition-column flex-1 h-full bg-[#06070b] border-r border-accent-purple/10 transform -translate-y-full"
         />
       ))}
     </div>

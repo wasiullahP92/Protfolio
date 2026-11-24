@@ -9,8 +9,8 @@ export default function SplitText({
   type = 'words', // 'words' | 'chars'
   className = '',
   delay = 0,
-  stagger = 0.04,
-  duration = 0.8,
+  stagger = 0.03,
+  duration = 0.7,
   triggerOnScroll = true,
   as: Component = 'span',
 }) {
@@ -20,11 +20,14 @@ export default function SplitText({
     const el = containerRef.current;
     if (!el) return;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-
     const targets = el.querySelectorAll('.split-item');
     if (!targets.length) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      gsap.set(targets, { opacity: 1, yPercent: 0, rotateX: 0 });
+      return;
+    }
 
     const animConfig = {
       yPercent: 0,
@@ -39,15 +42,23 @@ export default function SplitText({
     if (triggerOnScroll) {
       const st = ScrollTrigger.create({
         trigger: el,
-        start: 'top 88%',
+        start: 'top 92%',
         once: true,
         onEnter: () => {
-          gsap.to(targets, animConfig);
+          gsap.fromTo(
+            targets,
+            { yPercent: 60, opacity: 0, rotateX: 10 },
+            animConfig
+          );
         },
       });
       return () => st.kill();
     } else {
-      const tween = gsap.to(targets, animConfig);
+      const tween = gsap.fromTo(
+        targets,
+        { yPercent: 60, opacity: 0, rotateX: 10 },
+        animConfig
+      );
       return () => tween.kill();
     }
   }, [children, delay, duration, stagger, triggerOnScroll]);
@@ -63,7 +74,7 @@ export default function SplitText({
     return (
       <Component ref={containerRef} className={`inline-block ${className}`}>
         {words.map((word, wIdx) => (
-          <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.28em]">
+          <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
             {word.split('').map((char, cIdx) => (
               <span
                 key={cIdx}
@@ -71,7 +82,7 @@ export default function SplitText({
                 style={{ perspective: '600px' }}
               >
                 <span
-                  className="split-item inline-block transform translate-y-[120%] opacity-0"
+                  className="split-item inline-block transform"
                   style={{ transformOrigin: 'bottom center' }}
                 >
                   {char}
@@ -84,7 +95,7 @@ export default function SplitText({
     );
   }
 
-  // Type: words (default)
+  // Type: words
   const words = text.split(' ');
   return (
     <Component ref={containerRef} className={`inline-block ${className}`}>
@@ -95,7 +106,7 @@ export default function SplitText({
           style={{ perspective: '600px' }}
         >
           <span
-            className="split-item inline-block transform translate-y-[120%] opacity-0"
+            className="split-item inline-block transform"
             style={{ transformOrigin: 'bottom center' }}
           >
             {word}
