@@ -21,7 +21,6 @@ import CustomCursor from './components/animations/CustomCursor'; // 7. Custom Cu
 import Preloader from './components/animations/Preloader'; // 10. Website Preloader
 import PageTransition from './components/animations/PageTransition'; // 15. Page Transition Animation
 import InfiniteMarquee from './components/animations/InfiniteMarquee'; // 12. Infinite Marquee
-import FullScreenTextSection from './components/animations/FullScreenTextSection'; // 2. Full Screen Text Animation
 import HorizontalScrollSection from './components/animations/HorizontalScrollSection'; // 1. Horizontal Scroll Website
 import ProductShowcase from './components/animations/ProductShowcase'; // 5. Product Showcase
 import ScrollytellingSection from './components/animations/ScrollytellingSection'; // 9. Scrollytelling Website
@@ -63,9 +62,6 @@ function PublicPortfolio() {
 
         {/* 12. Infinite Marquee (Continuous Ribbon) */}
         <InfiniteMarquee speed="35s" />
-
-        {/* 2. Full Screen Text Animation Section */}
-        <FullScreenTextSection />
 
         {/* About Section */}
         <About onOpenCV={() => setIsCVOpen(true)} />
