@@ -10,7 +10,7 @@ import ProjectModal from './ProjectModal';
 export const resolveImageUrl = (img) => {
   if (!img) return '';
   if (img.startsWith('/uploads/')) {
-    const backendUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+    const backendUrl = import.meta.env.VITE_SERVER_URL || '';
     return `${backendUrl}${img}`;
   }
   return img;

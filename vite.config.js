@@ -7,7 +7,17 @@ export default defineConfig({
   base: './', // Ensures assets load correctly on any server, subfolder, or static host
   server: {
     port: 5173,
-    host: true
-  }
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+    },
+  },
 })
 

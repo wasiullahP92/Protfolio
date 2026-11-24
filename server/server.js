@@ -77,7 +77,7 @@ app.use(
   cors({
     origin: function (origin, callback) {
       // allow requests with no origin (like mobile apps, curl, or Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
         return callback(null, true);
       }
       return callback(null, true); // Permissive in dev
