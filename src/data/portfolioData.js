@@ -22,9 +22,9 @@ export const personalInfo = {
   ],
   socials: [
     { name: "Email", url: "mailto:wasiwebsolution@gmail.com", handle: "wasiwebsolution@gmail.com" },
-    { name: "GitHub", url: "https://github.com", handle: "github.com/wasiullah" },
-    { name: "LinkedIn", url: "https://linkedin.com", handle: "linkedin.com/in/wasiullah" },
-    { name: "WhatsApp", url: "https://wa.me/923000000000", handle: "Chat on WhatsApp" },
+    { name: "GitHub", url: "https://github.com/wasiullahP92", handle: "github.com/wasiullahP92" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/wasi-ullah-693810333/", handle: "linkedin.com/in/wasi-ullah-693810333" },
+    { name: "WhatsApp", url: "https://wa.me/923001234567", handle: "+92 300 1234567" },
   ],
 };
 
@@ -348,7 +348,7 @@ export const projectsData = [
       "Dynamic testimonials and Instagram feed integration",
     ],
     liveUrl: "https://example.com/luxestay-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "96 / 100", loadTime: "1.2s", responsive: "100%" },
   },
   {
@@ -367,7 +367,7 @@ export const projectsData = [
       "Advanced caching and WebP image delivery for ultra-fast browsing",
     ],
     liveUrl: "https://example.com/apexwear-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "92 / 100", conversionRate: "+28%", responsive: "100%" },
   },
   {
@@ -386,7 +386,7 @@ export const projectsData = [
       "Full compliance with modern web accessibility guidelines",
     ],
     liveUrl: "https://example.com/novacraft-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "97 / 100", leads: "+45%", responsive: "100%" },
   },
   {
@@ -405,7 +405,7 @@ export const projectsData = [
       "Local SEO optimization ranking in top local search queries",
     ],
     liveUrl: "https://example.com/apexcare-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "95 / 100", bounceRate: "24%", responsive: "100%" },
   },
   {
@@ -424,7 +424,7 @@ export const projectsData = [
       "Mobile-first design optimized for diners on smartphone devices",
     ],
     liveUrl: "https://example.com/urbanbite-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "94 / 100", reservations: "350+/mo", responsive: "100%" },
   },
   {
@@ -443,7 +443,7 @@ export const projectsData = [
       "Integrated Mailchimp subscription popup and inline forms",
     ],
     liveUrl: "https://example.com/techpulse-demo",
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/wasiullahP92",
     stats: { speed: "98 / 100", coreWebVitals: "Passed", responsive: "100%" },
   },
 ];

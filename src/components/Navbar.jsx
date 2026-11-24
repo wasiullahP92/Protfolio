@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { Menu, X, FileDown, ShieldCheck, ArrowUpRight, Sparkles } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, WhatsAppIcon } from './SocialIcons';
 
 export default function Navbar({ onOpenCV }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -238,12 +238,41 @@ export default function Navbar({ onOpenCV }) {
 
         {/* Bottom Footer Info inside Menu */}
         <div className="relative z-10 border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="fullscreen-footer-item flex items-center gap-4 text-xs font-mono text-slate-400">
+          <div className="fullscreen-footer-item flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400">
             <span>Peshawar, Pakistan</span>
             <span>•</span>
             <a href="mailto:wasiwebsolution@gmail.com" className="text-accent-electric hover:underline">
               wasiwebsolution@gmail.com
             </a>
+            <div className="flex items-center gap-2 pl-2">
+              <a
+                href="https://github.com/wasiullahP92"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-dark-900 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition"
+                title="GitHub"
+              >
+                <GithubIcon className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/wasi-ullah-693810333/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-dark-900 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-accent-electric transition"
+                title="LinkedIn"
+              >
+                <LinkedinIcon className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="https://wa.me/923001234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-dark-900 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-emerald-400 transition"
+                title="WhatsApp"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
 
           <div className="fullscreen-footer-item flex items-center gap-4">

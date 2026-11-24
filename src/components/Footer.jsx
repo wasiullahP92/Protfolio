@@ -45,7 +45,7 @@ export default function Footer({ onOpenCV }) {
 
             <div className="pt-2 flex items-center gap-3">
               <a
-                href="https://github.com"
+                href="https://github.com/wasiullahP92"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition"
@@ -55,7 +55,7 @@ export default function Footer({ onOpenCV }) {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/wasi-ullah-693810333/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition"
@@ -65,7 +65,7 @@ export default function Footer({ onOpenCV }) {
               </a>
 
               <a
-                href="https://wa.me/923000000000"
+                href="https://wa.me/923001234567"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-emerald-400 transition"

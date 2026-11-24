@@ -162,7 +162,7 @@ const initialProjects = [
     technologies: ['WordPress', 'Elementor Pro', 'Custom CSS', 'Responsive Design', 'SEO Schema'],
     category: 'WordPress',
     liveUrl: 'https://example.com/luxestay-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: true,
   },
   {
@@ -174,7 +174,7 @@ const initialProjects = [
     technologies: ['WooCommerce', 'WordPress', 'Stripe Gateway', 'Variation Swatches', 'Speed Cache'],
     category: 'E-Commerce',
     liveUrl: 'https://example.com/apexwear-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: true,
   },
   {
@@ -186,7 +186,7 @@ const initialProjects = [
     technologies: ['WordPress', 'Elementor', 'Custom JS Animations', 'CSS Grid', 'RankMath SEO'],
     category: 'Web Design',
     liveUrl: 'https://example.com/novacraft-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: true,
   },
   {
@@ -198,7 +198,7 @@ const initialProjects = [
     technologies: ['WordPress', 'Booking Engine', 'Elementor', 'Contact Form 7', 'Local SEO'],
     category: 'WordPress',
     liveUrl: 'https://example.com/apexcare-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: false,
   },
   {
@@ -210,7 +210,7 @@ const initialProjects = [
     technologies: ['WordPress', 'Responsive Menu', 'Table Reservation', 'Custom Typography', 'Performance'],
     category: 'Web Design',
     liveUrl: 'https://example.com/urbanbite-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: false,
   },
   {
@@ -222,7 +222,7 @@ const initialProjects = [
     technologies: ['WordPress', 'Custom Post Types', 'Newsletter API', 'RankMath SEO', 'CDN Caching'],
     category: 'WordPress',
     liveUrl: 'https://example.com/techpulse-demo',
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/wasiullahP92',
     featured: false,
   },
 ];

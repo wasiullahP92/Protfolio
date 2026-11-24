@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, Printer, Mail, MapPin, Briefcase, GraduationCap, Award, CheckCircle2 } from 'lucide-react';
+import { X, Printer, Mail, MapPin, Briefcase, GraduationCap, Award, CheckCircle2, Globe } from 'lucide-react';
 import { personalInfo, experienceData, educationData, skillsData } from '../data/portfolioData';
+import { GithubIcon, LinkedinIcon, WhatsAppIcon } from './SocialIcons';
 
 export default function CVModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -54,14 +55,26 @@ export default function CVModal({ isOpen, onClose }) {
               <h1 className="text-3xl font-extrabold text-white print:text-black tracking-tight">{personalInfo.name}</h1>
               <p className="text-accent-electric print:text-purple-700 font-medium text-lg mt-1">{personalInfo.role}</p>
               <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-slate-400 print:text-slate-600">
-                <span className="flex items-center gap-1.5">
+                <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-1.5 hover:text-white transition">
                   <Mail className="w-4 h-4 text-accent-purple print:text-slate-600" />
                   {personalInfo.email}
-                </span>
+                </a>
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-accent-purple print:text-slate-600" />
                   {personalInfo.location}
                 </span>
+                <a href="https://github.com/wasiullahP92" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition">
+                  <GithubIcon className="w-4 h-4 text-accent-purple print:text-slate-600" />
+                  github.com/wasiullahP92
+                </a>
+                <a href="https://www.linkedin.com/in/wasi-ullah-693810333/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-accent-electric transition">
+                  <LinkedinIcon className="w-4 h-4 text-accent-electric print:text-slate-600" />
+                  LinkedIn Profile
+                </a>
+                <a href="https://wa.me/923001234567" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition">
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-400 print:text-slate-600" />
+                  WhatsApp
+                </a>
               </div>
             </div>
 

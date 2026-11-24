@@ -171,7 +171,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-2 gap-3">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/wasiullahP92"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition group"
@@ -181,7 +181,7 @@ export default function Contact() {
                 </a>
 
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/wasi-ullah-693810333/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition group"
@@ -191,7 +191,7 @@ export default function Contact() {
                 </a>
 
                 <a
-                  href="https://wa.me/923000000000"
+                  href="https://wa.me/923001234567"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl bg-dark-850 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition group"
