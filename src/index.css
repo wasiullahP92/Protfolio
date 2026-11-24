@@ -92,6 +92,28 @@
   opacity: 0.9;
 }
 
+/* Marquee Continuous Keyframes */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
 /* Dot grid overlay */
 .bg-grid-pattern {
   background-size: 32px 32px;

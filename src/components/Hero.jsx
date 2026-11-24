@@ -19,6 +19,9 @@ import {
 import gsap from 'gsap';
 import { personalInfo as defaultInfo } from '../data/portfolioData';
 import { api } from '../utils/api';
+import SvgMorph from './animations/SvgMorph';
+import SplitText from './animations/SplitText';
+import ParallaxLayer from './animations/ParallaxLayer';
 
 export default function Hero({ onOpenCV }) {
   const [profile, setProfile] = useState(defaultInfo);
@@ -183,7 +186,8 @@ export default function Hero({ onOpenCV }) {
       ref={heroRef}
       className="relative min-h-[94vh] pt-32 pb-20 flex items-center justify-center overflow-hidden"
     >
-      {/* Background Decorative Ambient Glows */}
+      {/* Background Decorative Ambient Glows & Svg Morph Animation */}
+      <SvgMorph className="absolute -top-20 -left-20 w-[600px] h-[600px]" />
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent-violet/15 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-[500px] h-[500px] bg-accent-electric/10 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-full bg-grid-pattern opacity-60 pointer-events-none" />
