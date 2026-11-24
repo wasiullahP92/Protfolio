@@ -71,7 +71,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-dark-950 text-slate-100 flex flex-col lg:flex-row">
-      
+
       {/* Mobile Top Header */}
       <header className="lg:hidden bg-dark-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
         <div className="flex items-center gap-2.5">
@@ -112,9 +112,8 @@ export default function AdminLayout() {
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed lg:sticky top-0 bottom-0 left-0 w-72 bg-dark-900 border-r border-slate-800/90 z-40 flex flex-col justify-between transition-transform duration-300 lg:translate-x-0 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed lg:sticky top-0 bottom-0 left-0 w-72 bg-dark-900 border-r border-slate-800/90 z-40 flex flex-col justify-between transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         <div>
           {/* Sidebar Top Brand */}
@@ -152,10 +151,9 @@ export default function AdminLayout() {
                   end={item.end}
                   onClick={() => setSidebarOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 group ${
-                      isActive
-                        ? 'bg-gradient-to-r from-accent-violet to-accent-purple text-white shadow-glow-purple font-semibold'
-                        : 'text-slate-400 hover:text-white hover:bg-dark-850'
+                    `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 group ${isActive
+                      ? 'bg-gradient-to-r from-accent-violet to-accent-purple text-white shadow-glow-purple font-semibold'
+                      : 'text-slate-400 hover:text-white hover:bg-dark-850'
                     }`
                   }
                 >
