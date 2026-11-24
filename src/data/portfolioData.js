@@ -1,13 +1,19 @@
 export const personalInfo = {
   name: "Wasi Ullah",
-  role: "WordPress Developer & Web Designer",
+  role: "WordPress Developer | Web Designer | Full Stack Developer in Progress",
   status: "Available for Freelance & Contract Projects",
   email: "wasiwebsolution@gmail.com",
   location: "Peshawar, Pakistan",
+  heroHeading: "Building Modern Websites & Exploring New Technologies.",
+  heroSubtitle:
+    "I'm Wasi Ullah, a WordPress Developer and Computer Science student currently expanding my skills in React.js and modern web development.",
   shortIntro:
-    "I design and build high-performance, responsive WordPress websites with pixel-perfect attention to detail, modern UI/UX design, and clean web standards.",
+    "Hi, I'm Wasi Ullah, a passionate web developer and Computer Science student. I specialize in WordPress website design and development. I am continuously improving my development skills and exploring modern web technologies. Currently, I am learning React.js to build dynamic, interactive, and modern web applications.",
   fullBio:
-    "Motivated and hardworking student with a Diploma in Information Technology and hands-on WordPress website development experience. Passionate about web development, UI/UX aesthetics, and mastering modern technologies to deliver scalable digital solutions for clients and businesses.",
+    "Hi, I'm Wasi Ullah, a passionate web developer and Computer Science student. I specialize in WordPress website design and development. I am continuously improving my development skills and exploring modern web technologies. Currently, I am learning React.js to build dynamic, interactive, and modern web applications.",
+  currentLearningTech: "React.js",
+  trainingInstitute: "Saylani IT Mass Training Program (Saylani IT)",
+  university: "NCS University System",
   stats: [
     { label: "Client Satisfaction", value: "100%", description: "Committed to excellence" },
     { label: "Completed Projects", value: "15+", description: "WordPress & Web builds" },
@@ -23,10 +29,11 @@ export const personalInfo = {
 };
 
 export const skillsData = {
-  core: [
+  // Category 1: Current Skills (Established competencies)
+  current: [
     {
-      name: "WordPress Development",
-      category: "CMS & Development",
+      name: "WordPress",
+      category: "Current Skills",
       level: 95,
       icon: "Globe",
       highlight: "Custom themes, Elementor Pro, Gutenberg, WooCommerce, custom templates, ACF",
@@ -34,76 +41,213 @@ export const skillsData = {
     },
     {
       name: "Website Design",
-      category: "UI / UX & Layout",
+      category: "Current Skills",
       level: 90,
       icon: "Layout",
       highlight: "Mobile-first responsive layouts, modern dark & light UI, visual hierarchy",
       status: "Core Competency",
     },
     {
+      name: "Website Development",
+      category: "Current Skills",
+      level: 92,
+      icon: "Code2",
+      highlight: "Clean semantic markup, high-speed execution, conversion-focused user flows",
+      status: "Core Competency",
+    },
+    {
       name: "Website Maintenance",
-      category: "Operations & Care",
+      category: "Current Skills",
       level: 90,
       icon: "ShieldCheck",
-      highlight: "Security hardening, scheduled backups, plugin/theme updates, malware protection",
+      highlight: "Security hardening, scheduled backups, theme/plugin updates, malware scans",
       status: "Core Competency",
     },
     {
-      name: "Content Management",
-      category: "Architecture",
-      level: 92,
+      name: "Elementor",
+      category: "Current Skills",
+      level: 95,
       icon: "Layers",
-      highlight: "Custom post types, taxonomy structuring, dynamic content models, asset optimization",
+      highlight: "Theme builder, dynamic tags, customized templates, responsive breakpoints",
       status: "Core Competency",
     },
     {
-      name: "Basic SEO & Performance",
-      category: "Marketing & Speed",
+      name: "Basic SEO",
+      category: "Current Skills",
       level: 85,
       icon: "TrendingUp",
-      highlight: "RankMath/Yoast setup, schema markup, Core Web Vitals, caching & image compression",
+      highlight: "RankMath/Yoast setup, schema markup, Core Web Vitals, speed optimization",
       status: "Core Competency",
     },
     {
-      name: "Microsoft Office Suite",
-      category: "Documentation & Productivity",
+      name: "Microsoft Office",
+      category: "Current Skills",
       level: 92,
       icon: "FileText",
-      highlight: "Word, Excel (data sheets, reporting), PowerPoint (client pitch presentations)",
+      highlight: "Word reporting, Excel data management, PowerPoint client presentations",
       status: "Core Competency",
     },
   ],
+
+  // Category 2: Technologies Currently Learning
   learning: [
     {
-      name: "HTML5 Semantic Markup",
+      name: "HTML5",
+      category: "Learning",
       progress: 88,
       icon: "Code2",
-      description: "Semantic structures, accessibility (a11y), clean code standards",
-      tag: "Expanding Stack",
+      description: "Semantic structures, web accessibility (a11y), clean code standards",
+      tag: "Learning in Progress",
     },
     {
-      name: "Modern CSS3 & Tailwind CSS",
+      name: "CSS3",
+      category: "Learning",
       progress: 85,
       icon: "Palette",
-      description: "Flexbox, CSS Grid, keyframes, transitions, utility-first styling",
-      tag: "Expanding Stack",
+      description: "Flexbox, CSS Grid, keyframe animations, utility-first styling with Tailwind",
+      tag: "Learning in Progress",
     },
     {
-      name: "JavaScript (ES6+)",
-      progress: 75,
+      name: "JavaScript",
+      category: "Learning",
+      progress: 78,
       icon: "Cpu",
       description: "DOM manipulation, asynchronous fetching, modern ES6+ syntax & logic",
-      tag: "Actively Learning",
+      tag: "Learning in Progress",
     },
     {
-      name: "React.js & Modern Frontend",
-      progress: 68,
+      name: "React.js",
+      category: "Learning",
+      progress: 72,
       icon: "Boxes",
-      description: "Component architecture, hooks, state management, SPA design",
-      tag: "Actively Learning",
+      description: "Component architecture, state hooks, props, interactive single page apps",
+      tag: "Current Active Focus @ Saylani IT",
+    },
+    {
+      name: "Responsive Web Design",
+      category: "Learning",
+      progress: 90,
+      icon: "Layout",
+      description: "Fluid viewports, cross-device compatibility, modern mobile navigation",
+      tag: "Learning in Progress",
+    },
+  ],
+
+  // Category 3: Future Learning Goals (Clearly differentiated from professional experience)
+  futureGoals: [
+    {
+      name: "Advanced React.js",
+      category: "Future Learning Goals",
+      icon: "Boxes",
+      description: "Custom hooks, performance profiling, Context API, Next.js architecture",
+      status: "Upcoming Goal",
+    },
+    {
+      name: "Node.js",
+      category: "Future Learning Goals",
+      icon: "Cpu",
+      description: "Server-side runtime, non-blocking I/O, RESTful API microservices",
+      status: "Upcoming Goal",
+    },
+    {
+      name: "Express.js",
+      category: "Future Learning Goals",
+      icon: "Layers",
+      description: "Backend routing, middleware controllers, secure JWT auth pipelines",
+      status: "Upcoming Goal",
+    },
+    {
+      name: "MongoDB",
+      category: "Future Learning Goals",
+      icon: "Globe",
+      description: "NoSQL document collections, schema modeling with Mongoose, aggregation",
+      status: "Upcoming Goal",
+    },
+    {
+      name: "Full-Stack Development",
+      category: "Future Learning Goals",
+      icon: "Sparkles",
+      description: "End-to-end MERN stack mastery, full-lifecycle cloud deployment",
+      status: "Upcoming Goal",
     },
   ],
 };
+
+export const trainingData = [
+  {
+    institute: "Saylani IT Mass Training Program (Saylani IT)",
+    course: "Modern Web Development",
+    status: "Currently Learning",
+    currentFocus: "React.js",
+    period: "2024 – Present",
+    description:
+      "Selected for the prestigious Saylani IT Mass Training Program, undergoing rigorous hands-on training in modern web engineering, JavaScript algorithms, and interactive frontend development with React.js.",
+    highlights: [
+      "Modern Web Standards (HTML5 & CSS3)",
+      "JavaScript (ES6+) Logic & DOM Manipulation",
+      "React.js Component Architecture & Hooks",
+      "Interactive Single-Page Applications (SPAs)",
+    ],
+  },
+];
+
+export const learningJourneyData = [
+  {
+    step: 1,
+    title: "WordPress Website Development",
+    subtitle: "Established Foundation",
+    description:
+      "Mastered WordPress theme customization, Elementor Pro design, WooCommerce e-commerce development, and responsive website delivery for freelance clients.",
+    icon: "Globe",
+    tag: "Core Foundation",
+    status: "Completed & Active",
+    color: "from-purple-500 to-indigo-600",
+  },
+  {
+    step: 2,
+    title: "Modern Web Development",
+    subtitle: "Frontend Core",
+    description:
+      "Advanced into semantic HTML5, modern CSS3 layout systems (Flexbox, CSS Grid), responsive breakpoints, and modern utility CSS frameworks like Tailwind.",
+    icon: "Layout",
+    tag: "Web Foundations",
+    status: "Completed & Active",
+    color: "from-blue-500 to-cyan-600",
+  },
+  {
+    step: 3,
+    title: "Learning JavaScript",
+    subtitle: "Programming Logic",
+    description:
+      "Deepening algorithmic problem-solving with JavaScript ES6+, arrow functions, array methods, async/await, and real-time DOM interaction.",
+    icon: "Cpu",
+    tag: "Programming Logic",
+    status: "Active Learning",
+    color: "from-amber-500 to-yellow-600",
+  },
+  {
+    step: 4,
+    title: "Currently Learning React.js",
+    subtitle: "Saylani IT Training",
+    description:
+      "Actively training at Saylani IT in React.js: functional components, state hooks, reactive UI flows, and building modern, high-speed single-page applications.",
+    icon: "Boxes",
+    tag: "Current Active Focus",
+    status: "In Progress",
+    color: "from-cyan-400 to-blue-600",
+  },
+  {
+    step: 5,
+    title: "Future Goal: Full-Stack Developer",
+    subtitle: "MERN Stack Horizon",
+    description:
+      "Targeting complete full-stack mastery across Node.js, Express.js, MongoDB database modeling, and scalable full-stack web architecture.",
+    icon: "Sparkles",
+    tag: "Future Target",
+    status: "Upcoming Goal",
+    color: "from-pink-500 to-purple-600",
+  },
+];
 
 export const experienceData = [
   {
@@ -142,9 +286,22 @@ export const experienceData = [
 
 export const educationData = [
   {
+    degree: "Computer Science",
+    institution: "NCS University System",
+    period: "Currently Studying",
+    status: "Currently Studying",
+    location: "Peshawar, Pakistan",
+    field: "Computer Science & Information Technologies",
+    description:
+      "Currently studying Computer Science at NCS University System, Peshawar, Pakistan, deepening analytical problem-solving and software development principles.",
+    highlights: ["Computer Science Fundamentals", "Active Academic Studies", "Analytical Problem Solving"],
+  },
+  {
     degree: "Diploma in Information Technology (DIT)",
     institution: "Excel Learners Academy",
     period: "Completed",
+    status: "Completed",
+    location: "Peshawar, Pakistan",
     field: "Information Technology & Software Applications",
     description:
       "Comprehensive curriculum focusing on IT fundamentals, web design concepts, database management, computer networking, and office automation tools.",
@@ -152,8 +309,10 @@ export const educationData = [
   },
   {
     degree: "Intermediate",
-    institution: "Government Degree College Hayatabad",
+    institution: "Government Degree College Hayatabad, Peshawar",
     period: "Completed",
+    status: "Completed",
+    location: "Peshawar, Pakistan",
     field: "Higher Secondary Education",
     description:
       "Strong academic foundation in analytical thinking, problem-solving, and computer sciences preparing for advanced technical studies.",
@@ -163,6 +322,8 @@ export const educationData = [
     degree: "Matriculation",
     institution: "Iqbal Public School",
     period: "Completed",
+    status: "Completed",
+    location: "Peshawar, Pakistan",
     field: "Secondary School Certificate",
     description:
       "Foundational education with emphasis on Science, Mathematics, and Computer Applications with high academic discipline.",
@@ -286,4 +447,3 @@ export const projectsData = [
     stats: { speed: "98 / 100", coreWebVitals: "Passed", responsive: "100%" },
   },
 ];
-

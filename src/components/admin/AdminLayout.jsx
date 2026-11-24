@@ -7,6 +7,7 @@ import {
   Wrench,
   Briefcase,
   GraduationCap,
+  BookOpen,
   MessageSquare,
   Settings,
   LogOut,
@@ -56,6 +57,7 @@ export default function AdminLayout() {
     { name: 'Projects', path: '/admin/projects', icon: FolderGit2 },
     { name: 'Add New Project', path: '/admin/projects/new', icon: PlusCircle },
     { name: 'Skills Management', path: '/admin/skills', icon: Wrench },
+    { name: 'Training & Courses', path: '/admin/training', icon: BookOpen },
     { name: 'Experience Management', path: '/admin/experience', icon: Briefcase },
     { name: 'Education Management', path: '/admin/education', icon: GraduationCap },
     {

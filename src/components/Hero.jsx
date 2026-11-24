@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Code, Send, Layout, ShieldCheck, CheckCircle2, FileText } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Code, Send, Layout, ShieldCheck, CheckCircle2, FileText, Download, Sparkles, BookOpen } from 'lucide-react';
 import gsap from 'gsap';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo as defaultInfo } from '../data/portfolioData';
+import { api } from '../utils/api';
 
 export default function Hero({ onOpenCV }) {
+  const [profile, setProfile] = useState(defaultInfo);
   const heroRef = useRef(null);
   const titleRef = useRef(null);
   const badgeRef = useRef(null);
@@ -11,12 +13,33 @@ export default function Hero({ onOpenCV }) {
   const visualRef = useRef(null);
 
   useEffect(() => {
+    // Attempt to load live profile metadata if updated via Admin Dashboard
+    const loadProfile = async () => {
+      try {
+        const res = await api.getPublicProfile();
+        if (res.success && res.profile) {
+          setProfile((prev) => ({
+            ...prev,
+            name: res.profile.name || prev.name,
+            role: res.profile.professionalTitle || prev.role,
+            shortIntro: res.profile.shortIntro || prev.shortIntro,
+            location: res.profile.location || prev.location,
+            currentLearningTech: res.profile.currentLearningTech || prev.currentLearningTech,
+          }));
+        }
+      } catch {
+        // Fallback to static default
+      }
+    };
+    loadProfile();
+  }, []);
+
+  useEffect(() => {
     // Respect user reduced-motion preference
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Intro timeline using fromTo to avoid React 19 StrictMode double-mount 0-opacity trap
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       if (badgeRef.current) {
@@ -106,26 +129,37 @@ export default function Hero({ onOpenCV }) {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
               <span className="text-xs font-medium text-slate-300">
-                {personalInfo.status}
+                {profile.status}
               </span>
             </div>
 
             {/* Main Headings */}
-            <div ref={titleRef} className="space-y-3">
-              <p className="text-sm sm:text-base font-semibold uppercase tracking-widest text-accent-electric font-mono">
-                Welcome to my universe
-              </p>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
-                Hi, I'm <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-accent-purple drop-shadow-sm">
-                  {personalInfo.name}
+            <div ref={titleRef} className="space-y-4">
+              <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-widest text-accent-electric font-mono">
+                <Sparkles className="w-4 h-4 text-accent-electric" />
+                <span>WordPress Developer & CS Student</span>
+              </div>
+              
+              {/* Requested Primary Heading */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+                Building Modern Websites & <br className="hidden sm:inline" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple via-indigo-300 to-accent-electric drop-shadow-sm">
+                  Exploring New Technologies.
                 </span>
               </h1>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent-purple via-indigo-300 to-accent-electric pt-1">
-                {personalInfo.role}
-              </h2>
-              <p className="text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed pt-2">
-                {personalInfo.shortIntro}
+
+              {/* Professional Title Subhead */}
+              <div className="text-sm sm:text-base font-semibold text-accent-electric/90 flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 font-mono">
+                <span>WordPress Developer</span>
+                <span className="text-slate-600">•</span>
+                <span>Web Designer</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-accent-purple">Full-Stack Developer in Progress</span>
+              </div>
+
+              {/* Requested Subtitle */}
+              <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed pt-1">
+                I'm Wasi Ullah, a WordPress Developer and Computer Science student currently expanding my skills in React.js and modern web development.
               </p>
             </div>
 
@@ -135,7 +169,7 @@ export default function Hero({ onOpenCV }) {
                 href="#projects"
                 className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-accent-violet to-accent-purple shadow-glow-purple hover:shadow-glow-combo transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <span>View My Projects</span>
+                <span>Explore My Projects</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
 
@@ -149,41 +183,41 @@ export default function Hero({ onOpenCV }) {
 
               <button
                 onClick={onOpenCV}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-400 hover:text-white transition duration-200"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-slate-200 bg-dark-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-accent-purple transition-all duration-300 shadow-sm"
               >
-                <FileText className="w-4 h-4 text-accent-purple" />
-                <span>View Resume</span>
+                <Download className="w-4 h-4 text-accent-purple" />
+                <span>Download CV</span>
               </button>
             </div>
 
             {/* Quick Tech Tags */}
-            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-slate-400">
-              <span className="font-mono uppercase text-[11px] tracking-wider text-slate-500 mr-2">Specializing in:</span>
-              <span className="px-3 py-1 rounded-lg bg-dark-850 border border-slate-800 text-slate-300">WordPress</span>
-              <span className="px-3 py-1 rounded-lg bg-dark-850 border border-slate-800 text-slate-300">Elementor Pro</span>
-              <span className="px-3 py-1 rounded-lg bg-dark-850 border border-slate-800 text-slate-300">WooCommerce</span>
-              <span className="px-3 py-1 rounded-lg bg-dark-850 border border-slate-800 text-slate-300">Responsive UI/UX</span>
-              <span className="px-3 py-1 rounded-lg bg-dark-850 border border-slate-800 text-slate-300">Web Maintenance</span>
+            <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-slate-400">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-slate-500 mr-1">Specializing in:</span>
+              <span className="px-2.5 py-1 rounded-md bg-dark-850 border border-slate-800 text-slate-300 font-mono">WordPress</span>
+              <span className="px-2.5 py-1 rounded-md bg-dark-850 border border-slate-800 text-slate-300 font-mono">Elementor</span>
+              <span className="px-2.5 py-1 rounded-md bg-dark-850 border border-slate-800 text-slate-300 font-mono">React.js (Learning)</span>
+              <span className="px-2.5 py-1 rounded-md bg-dark-850 border border-slate-800 text-slate-300 font-mono">NCS University</span>
             </div>
+
           </div>
 
-          {/* Right Visual Profile Column */}
+          {/* Right Visual / Profile Card */}
           <div ref={visualRef} className="lg:col-span-5 flex justify-center items-center relative">
-            <div className="relative w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96">
-              
-              {/* Outer Glowing Gradient Halo Rings */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent-purple via-accent-violet to-accent-electric opacity-35 blur-2xl animate-pulse-slow" />
-              <div className="absolute -inset-2 rounded-full border border-dashed border-accent-purple/30 animate-spin-slow pointer-events-none" />
+            
+            {/* Ambient Backlight Circle */}
+            <div className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full bg-gradient-to-tr from-accent-violet/30 via-indigo-600/20 to-accent-electric/30 blur-[90px] pointer-events-none animate-pulse-glow" />
 
-              {/* Main Profile Avatar Card */}
-              <div className="relative w-full h-full rounded-3xl bg-gradient-to-b from-dark-800 to-dark-900 border-2 border-slate-700/60 p-3 shadow-2xl flex items-center justify-center overflow-hidden group">
+            {/* Main Interactive Card Container */}
+            <div className="relative w-full max-w-[370px] sm:max-w-[410px] aspect-[4/5] rounded-3xl p-1 bg-gradient-to-b from-slate-700/50 via-slate-800/20 to-accent-violet/30 shadow-2xl backdrop-blur-xl">
+              
+              <div className="relative w-full h-full rounded-[22px] bg-dark-900/90 border border-slate-800 flex flex-col items-center justify-between p-7 text-center overflow-hidden">
                 
                 {/* Background decorative art inside avatar box */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-accent-violet/20 via-transparent to-accent-electric/15 opacity-60" />
                 
                 {/* Developer Avatar Placeholder */}
-                <div className="relative w-full h-full rounded-2xl bg-dark-850 flex flex-col items-center justify-center p-6 text-center border border-slate-700/40 overflow-hidden">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-accent-violet to-accent-electric p-1 shadow-glow-combo mb-4">
+                <div className="relative w-full flex flex-col items-center mt-2">
+                  <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-gradient-to-tr from-accent-violet to-accent-electric p-1 shadow-glow-combo mb-4">
                     <div className="w-full h-full rounded-full bg-dark-900 overflow-hidden flex items-center justify-center">
                       <img
                         src="/wasi-profile.jpg"
@@ -200,45 +234,58 @@ export default function Hero({ onOpenCV }) {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white tracking-tight">Wasi Ullah</h3>
-                  <p className="text-xs sm:text-sm text-accent-electric font-medium mt-0.5">WordPress Developer</p>
+                  <h3 className="text-xl font-bold text-white tracking-tight">{profile.name}</h3>
+                  <p className="text-xs sm:text-sm text-accent-electric font-medium mt-0.5">WordPress Developer & Designer</p>
                   <p className="text-[11px] text-slate-400 mt-2 font-mono flex items-center gap-1.5">
                     <Code className="w-3.5 h-3.5 text-accent-purple" />
-                    PESHAWAR, PAKISTAN
+                    <span>{profile.location.toUpperCase()}</span>
                   </p>
                 </div>
+
+                {/* Micro Details in Card */}
+                <div className="w-full space-y-2 pt-4 border-t border-slate-800/80 relative z-10">
+                  <div className="flex items-center justify-between text-xs py-1 px-2.5 rounded-lg bg-dark-850/60 border border-slate-800/60">
+                    <span className="text-slate-400 font-mono">Academic:</span>
+                    <span className="text-white font-medium">NCS University System</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs py-1 px-2.5 rounded-lg bg-dark-850/60 border border-slate-800/60">
+                    <span className="text-slate-400 font-mono">Training:</span>
+                    <span className="text-accent-electric font-medium">Saylani IT (React.js)</span>
+                  </div>
+                </div>
+
               </div>
 
-              {/* Floating Badge 1: WordPress Specialist */}
-              <div className="hero-float-1 absolute -top-4 -left-6 sm:-left-8 glass-panel px-3.5 py-2.5 rounded-xl border border-accent-purple/40 shadow-glow-purple flex items-center gap-2.5 z-20">
+              {/* Floating Badge 1 - Top Left */}
+              <div className="hero-float-1 absolute -top-5 -left-4 sm:-left-6 px-4 py-2.5 rounded-xl glass-panel border border-slate-700/80 shadow-glow-purple flex items-center gap-2.5 z-20">
                 <div className="w-8 h-8 rounded-lg bg-accent-violet/20 flex items-center justify-center text-accent-purple">
                   <Layout className="w-4 h-4" />
                 </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 font-mono">Expertise</p>
+                <div className="text-left">
+                  <p className="text-[10px] text-slate-400 font-mono uppercase">Expertise</p>
                   <p className="text-xs font-bold text-white">WordPress & Elementor</p>
                 </div>
               </div>
 
-              {/* Floating Badge 2: Responsive Design */}
-              <div className="hero-float-2 absolute -bottom-5 -left-4 sm:-left-6 glass-panel px-3.5 py-2.5 rounded-xl border border-accent-electric/40 shadow-glow-cyan flex items-center gap-2.5 z-20">
+              {/* Floating Badge 2 - Middle Right */}
+              <div className="hero-float-2 absolute top-1/2 -right-4 sm:-right-8 -translate-y-1/2 px-4 py-2.5 rounded-xl glass-panel border border-slate-700/80 shadow-glow-cyan flex items-center gap-2.5 z-20">
                 <div className="w-8 h-8 rounded-lg bg-accent-electric/20 flex items-center justify-center text-accent-electric">
-                  <CheckCircle2 className="w-4 h-4" />
+                  <BookOpen className="w-4 h-4" />
                 </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 font-mono">Design Standard</p>
-                  <p className="text-xs font-bold text-white">100% Mobile Responsive</p>
+                <div className="text-left">
+                  <p className="text-[10px] text-slate-400 font-mono uppercase">Saylani IT Focus</p>
+                  <p className="text-xs font-bold text-accent-electric">Learning React.js</p>
                 </div>
               </div>
 
-              {/* Floating Badge 3: Fast & Secure */}
-              <div className="hero-float-3 absolute top-1/2 -right-6 sm:-right-8 -translate-y-1/2 glass-panel px-3.5 py-2.5 rounded-xl border border-slate-700/80 shadow-card-dark flex items-center gap-2.5 z-20">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  <ShieldCheck className="w-4 h-4" />
+              {/* Floating Badge 3 - Bottom Left */}
+              <div className="hero-float-3 absolute -bottom-5 left-4 px-4 py-2 rounded-xl glass-panel border border-slate-700/80 shadow-lg flex items-center gap-2.5 z-20">
+                <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                  <CheckCircle2 className="w-4 h-4" />
                 </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 font-mono">Reliability</p>
-                  <p className="text-xs font-bold text-white">Speed & SEO Ready</p>
+                <div className="text-left">
+                  <p className="text-[10px] text-slate-400 font-mono uppercase">Academic Status</p>
+                  <p className="text-xs font-bold text-white">CS Student @ NCS</p>
                 </div>
               </div>
 
@@ -247,17 +294,20 @@ export default function Hero({ onOpenCV }) {
 
         </div>
 
-        {/* Highlight Stats Bar */}
-        <div className="mt-16 pt-10 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {personalInfo.stats.map((stat, index) => (
-            <div key={index} className="p-4 rounded-xl bg-dark-900/50 border border-slate-800/80 hover:border-slate-700 transition">
-              <div className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200">
+        {/* Bottom Hero Stats Strip */}
+        <div className="mt-16 pt-8 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {defaultInfo.stats.map((stat, index) => (
+            <div
+              key={index}
+              className="glass-panel p-5 rounded-xl border border-slate-800/80 text-center hover:border-accent-purple/40 transition duration-300"
+            >
+              <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                 {stat.value}
               </div>
-              <div className="text-xs sm:text-sm font-semibold text-accent-purple mt-1">
+              <div className="text-xs font-bold text-accent-electric mt-1">
                 {stat.label}
               </div>
-              <div className="text-[11px] text-slate-500 mt-0.5 font-mono">
+              <div className="text-[11px] text-slate-400 mt-0.5">
                 {stat.description}
               </div>
             </div>
@@ -268,4 +318,3 @@ export default function Hero({ onOpenCV }) {
     </section>
   );
 }
-

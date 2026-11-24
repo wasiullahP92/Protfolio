@@ -39,9 +39,10 @@ async function request(endpoint, options = {}) {
 }
 
 export const api = {
-  // Authentication
+  // Authentication & Profile
   login: (credentials) => request('/auth/login', { method: 'POST', body: credentials }),
   getMe: () => request('/auth/me'),
+  getPublicProfile: () => request('/auth/profile-public'),
   logout: () => request('/auth/logout', { method: 'POST' }),
   updateProfile: (profileData) => request('/auth/profile', { method: 'PUT', body: profileData }),
   updatePassword: (passwords) => request('/auth/password', { method: 'PUT', body: passwords }),
@@ -82,6 +83,13 @@ export const api = {
   createEducation: (data) => request('/education', { method: 'POST', body: data }),
   updateEducation: (id, data) => request(`/education/${id}`, { method: 'PUT', body: data }),
   deleteEducation: (id) => request(`/education/${id}`, { method: 'DELETE' }),
+
+  // Professional Training
+  getTrainings: () => request('/trainings'),
+  getTrainingById: (id) => request(`/trainings/${id}`),
+  createTraining: (data) => request('/trainings', { method: 'POST', body: data }),
+  updateTraining: (id, data) => request(`/trainings/${id}`, { method: 'PUT', body: data }),
+  deleteTraining: (id) => request(`/trainings/${id}`, { method: 'DELETE' }),
 
   // Messages (Contact Form & Admin)
   getMessages: () => request('/messages'),

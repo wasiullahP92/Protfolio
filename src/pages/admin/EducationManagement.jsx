@@ -22,6 +22,8 @@ export default function EducationManagement() {
     degree: '',
     startDate: '',
     endDate: '',
+    status: 'Completed',
+    location: 'Peshawar, Pakistan',
     description: '',
   });
   const [submitting, setSubmitting] = useState(false);
@@ -51,6 +53,8 @@ export default function EducationManagement() {
       degree: '',
       startDate: '',
       endDate: '',
+      status: 'Completed',
+      location: 'Peshawar, Pakistan',
       description: '',
     });
     setIsModalOpen(true);
@@ -63,6 +67,8 @@ export default function EducationManagement() {
       degree: edu.degree,
       startDate: edu.startDate || '',
       endDate: edu.endDate || '',
+      status: edu.status || (edu.endDate?.includes('Current') ? 'Currently Studying' : 'Completed'),
+      location: edu.location || 'Peshawar, Pakistan',
       description: edu.description,
     });
     setIsModalOpen(true);
@@ -243,7 +249,32 @@ export default function EducationManagement() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300">Start Year</label>
+                  <label className="text-xs font-semibold text-slate-300">Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-dark-850 border border-slate-700 text-xs text-white focus:outline-none focus:border-accent-purple"
+                  >
+                    <option value="Completed">Completed</option>
+                    <option value="Currently Studying">Currently Studying</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300">Location</label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    placeholder="Peshawar, Pakistan"
+                    className="w-full px-3.5 py-2 rounded-xl bg-dark-850 border border-slate-700 text-xs text-white focus:outline-none focus:border-accent-purple"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300">Start Year (Optional)</label>
                   <input
                     type="text"
                     value={formData.startDate}
@@ -254,12 +285,12 @@ export default function EducationManagement() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-300">End Year</label>
+                  <label className="text-xs font-semibold text-slate-300">End Year / Status Text</label>
                   <input
                     type="text"
                     value={formData.endDate}
                     onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                    placeholder="2024"
+                    placeholder="Completed or Currently Studying"
                     className="w-full px-3.5 py-2 rounded-xl bg-dark-850 border border-slate-700 text-xs text-white focus:outline-none focus:border-accent-purple"
                   />
                 </div>

@@ -10,23 +10,29 @@ import {
   Palette, 
   Cpu, 
   Boxes, 
-  Sparkles
+  Sparkles,
+  Target,
+  Compass,
+  CheckCircle2,
+  Clock
 } from 'lucide-react';
 import { skillsData as defaultSkills } from '../data/portfolioData';
 import { api } from '../utils/api';
 
 // Icon mapping helper
 const iconMap = {
-  Globe: Globe,
-  Layout: Layout,
-  ShieldCheck: ShieldCheck,
-  Layers: Layers,
-  TrendingUp: TrendingUp,
-  FileText: FileText,
-  Code2: Code2,
-  Palette: Palette,
-  Cpu: Cpu,
-  Boxes: Boxes,
+  Globe,
+  Layout,
+  ShieldCheck,
+  Layers,
+  TrendingUp,
+  FileText,
+  Code2,
+  Palette,
+  Cpu,
+  Boxes,
+  Sparkles,
+  Target,
 };
 
 export default function Skills() {
@@ -38,36 +44,46 @@ export default function Skills() {
       try {
         const res = await api.getSkills();
         if (res.success && Array.isArray(res.data) && res.data.length > 0) {
-          const core = [];
+          const current = [];
           const learning = [];
+          const futureGoals = [];
 
           res.data.forEach((s) => {
-            if (s.category === 'Expanding Stack' || s.category.toLowerCase().includes('learning')) {
+            const cat = (s.category || '').toLowerCase();
+            if (cat.includes('future') || cat.includes('goal')) {
+              futureGoals.push({
+                name: s.name,
+                category: 'Future Learning Goals',
+                icon: s.icon || 'Sparkles',
+                description: s.description || `Upcoming technology: ${s.name}`,
+                status: 'Upcoming Goal',
+              });
+            } else if (cat.includes('learning') || cat.includes('expand')) {
               learning.push({
                 name: s.name,
-                progress: s.level,
+                category: 'Learning',
+                progress: s.level || 75,
                 icon: s.icon || 'Code2',
-                description: s.description || `${s.name} modern development practices`,
-                tag: s.category,
+                description: s.description || `Actively studying ${s.name} modern concepts`,
+                tag: 'Learning in Progress',
               });
             } else {
-              core.push({
+              current.push({
                 name: s.name,
-                category: s.category,
-                level: s.level,
+                category: 'Current Skills',
+                level: s.level || 90,
                 icon: s.icon || 'Globe',
-                highlight: s.description || `Core proficiency in ${s.name} architecture & delivery`,
+                highlight: s.description || `Proven experience in ${s.name}`,
                 status: 'Core Competency',
               });
             }
           });
 
-          if (core.length > 0 || learning.length > 0) {
-            setSkillsData({
-              core: core.length > 0 ? core : defaultSkills.core,
-              learning: learning.length > 0 ? learning : defaultSkills.learning,
-            });
-          }
+          setSkillsData({
+            current: current.length > 0 ? current : defaultSkills.current,
+            learning: learning.length > 0 ? learning : defaultSkills.learning,
+            futureGoals: futureGoals.length > 0 ? futureGoals : defaultSkills.futureGoals,
+          });
         }
       } catch {
         // Fallback to default
@@ -76,6 +92,11 @@ export default function Skills() {
 
     fetchLiveSkills();
   }, []);
+
+  const totalCount =
+    (skillsData.current?.length || 0) +
+    (skillsData.learning?.length || 0) +
+    (skillsData.futureGoals?.length || 0);
 
   return (
     <section id="skills" className="py-24 relative overflow-hidden">
@@ -92,10 +113,10 @@ export default function Skills() {
             <span>Technical Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple via-indigo-300 to-accent-electric">Expertise</span>
+            Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple via-indigo-300 to-accent-electric">Technical Journey</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            A comprehensive overview of my core competencies in WordPress development, web design, and actively expanding technical skills.
+            A structured breakdown of my established competencies, active technical learning, and upcoming full-stack development goals.
           </p>
 
           {/* Filter Pills */}
@@ -108,17 +129,17 @@ export default function Skills() {
                   : 'bg-dark-850 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              All Skills ({skillsData.core.length + skillsData.learning.length})
+              All Categories ({totalCount})
             </button>
             <button
-              onClick={() => setFilter('core')}
+              onClick={() => setFilter('current')}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition ${
-                filter === 'core'
+                filter === 'current'
                   ? 'bg-accent-violet text-white shadow-glow-purple'
                   : 'bg-dark-850 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              Core Expertise ({skillsData.core.length})
+              Current Skills ({skillsData.current?.length || 0})
             </button>
             <button
               onClick={() => setFilter('learning')}
@@ -128,61 +149,75 @@ export default function Skills() {
                   : 'bg-dark-850 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              Currently Learning ({skillsData.learning.length})
+              Learning ({skillsData.learning?.length || 0})
+            </button>
+            <button
+              onClick={() => setFilter('future')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition ${
+                filter === 'future'
+                  ? 'bg-accent-violet text-white shadow-glow-purple'
+                  : 'bg-dark-850 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              Future Goals ({skillsData.futureGoals?.length || 0})
             </button>
           </div>
         </div>
 
-        {/* Section 1: Core Professional Skills */}
-        {(filter === 'all' || filter === 'core') && (
-          <div className="mb-14">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 rounded-full bg-accent-electric shadow-glow-cyan" />
-              <h3 className="text-xl font-bold text-white tracking-tight">
-                Core Professional Competencies
-              </h3>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent-electric/10 text-accent-electric border border-accent-electric/30 font-mono">
-                Production Ready
+        {/* =========================================================================
+            CATEGORY 1: CURRENT SKILLS
+        ========================================================================= */}
+        {(filter === 'all' || filter === 'current') && (
+          <div className="mb-16">
+            <div className="flex items-center justify-between pb-3 mb-6 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+                <h3 className="text-xl font-bold text-white tracking-tight">
+                  Current Skills
+                </h3>
+                <span className="text-xs font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  Established Experience
+                </span>
+              </div>
+              <span className="text-xs font-mono text-slate-400">
+                {skillsData.current?.length || 0} Technologies
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {skillsData.core.map((skill, index) => {
-                const IconComponent = iconMap[skill.icon] || Globe;
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {skillsData.current?.map((skill, index) => {
+                const Icon = iconMap[skill.icon] || Globe;
                 return (
                   <div
                     key={index}
-                    className="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800 flex flex-col justify-between group"
+                    className="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800/80 hover:border-accent-purple/50 group transition duration-300 relative overflow-hidden"
                   >
-                    <div>
-                      {/* Top Row: Icon & Status Tag */}
-                      <div className="flex items-center justify-between gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-accent-violet/15 border border-accent-violet/30 flex items-center justify-center text-accent-purple group-hover:scale-110 group-hover:bg-accent-violet group-hover:text-white transition duration-300">
-                          <IconComponent className="w-6 h-6" />
-                        </div>
-                        <span className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-dark-800 text-slate-300 border border-slate-700/60">
-                          {skill.category}
-                        </span>
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-accent-violet/15 border border-accent-violet/30 flex items-center justify-center text-accent-purple group-hover:scale-110 transition duration-300">
+                        <Icon className="w-6 h-6" />
                       </div>
-
-                      {/* Title & Description */}
-                      <h4 className="text-lg font-bold text-white mb-2 group-hover:text-accent-electric transition">
-                        {skill.name}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                        {skill.highlight}
-                      </p>
+                      <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        {skill.status || 'Active'}
+                      </span>
                     </div>
 
-                    {/* Progress Bar & Proficiency */}
-                    <div className="mt-6 pt-4 border-t border-slate-800/80">
-                      <div className="flex justify-between items-center text-xs mb-1.5 font-medium">
-                        <span className="text-slate-400 font-mono">{skill.status}</span>
-                        <span className="text-accent-purple font-mono font-bold">{skill.level}%</span>
+                    <h4 className="text-base font-bold text-white mb-2 group-hover:text-accent-electric transition">
+                      {skill.name}
+                    </h4>
+
+                    <p className="text-xs text-slate-300/90 leading-relaxed mb-4">
+                      {skill.highlight}
+                    </p>
+
+                    {/* Progress Bar */}
+                    <div className="space-y-1.5 pt-2 border-t border-slate-800/80">
+                      <div className="flex justify-between text-[11px] font-mono">
+                        <span className="text-slate-400">Proficiency</span>
+                        <span className="text-accent-electric font-semibold">{skill.level}%</span>
                       </div>
-                      <div className="w-full h-1.5 rounded-full bg-dark-800 overflow-hidden">
+                      <div className="w-full h-1.5 bg-dark-900 rounded-full overflow-hidden border border-slate-800">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-accent-violet to-accent-electric transition-all duration-1000"
+                          className="h-full bg-gradient-to-r from-accent-purple to-accent-electric rounded-full transition-all duration-1000"
                           style={{ width: `${skill.level}%` }}
                         />
                       </div>
@@ -194,52 +229,127 @@ export default function Skills() {
           </div>
         )}
 
-        {/* Section 2: Skills Currently Learning / Expanding Stack */}
+        {/* =========================================================================
+            CATEGORY 2: TECHNOLOGIES CURRENTLY LEARNING
+        ========================================================================= */}
         {(filter === 'all' || filter === 'learning') && (
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 rounded-full bg-accent-purple shadow-glow-purple" />
-              <h3 className="text-xl font-bold text-white tracking-tight">
-                Currently Learning & Expanding Stack
-              </h3>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent-violet/15 text-accent-purple border border-accent-violet/30 font-mono">
-                HTML, CSS & JavaScript
+          <div className="mb-16">
+            <div className="flex items-center justify-between pb-3 mb-6 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-accent-electric shadow-glow-cyan" />
+                <h3 className="text-xl font-bold text-white tracking-tight">
+                  Technologies Learning
+                </h3>
+                <span className="text-xs font-mono text-accent-electric px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
+                  Actively Expanding Stack
+                </span>
+              </div>
+              <span className="text-xs font-mono text-slate-400">
+                {skillsData.learning?.length || 0} Technologies
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {skillsData.learning.map((item, index) => {
-                const IconComponent = iconMap[item.icon] || Code2;
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {skillsData.learning?.map((item, index) => {
+                const Icon = iconMap[item.icon] || Code2;
                 return (
                   <div
                     key={index}
-                    className="p-6 rounded-2xl bg-dark-900/80 border border-slate-800/90 hover:border-accent-purple/50 transition-all duration-300 relative overflow-hidden group"
+                    className="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800/80 hover:border-accent-electric/40 group transition duration-300 relative overflow-hidden"
                   >
-                    {/* Glowing highlight indicator */}
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent-violet/10 rounded-full blur-xl pointer-events-none group-hover:bg-accent-violet/20 transition" />
-
-                    <div className="w-11 h-11 rounded-xl bg-accent-violet/10 border border-accent-violet/25 flex items-center justify-center text-accent-purple mb-4 group-hover:scale-105 transition">
-                      <IconComponent className="w-5 h-5" />
-                    </div>
-
-                    <div className="inline-block px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-accent-violet/15 text-accent-purple mb-2">
-                      {item.tag}
-                    </div>
-
-                    <h4 className="text-base font-bold text-white mb-1.5">{item.name}</h4>
-                    <p className="text-xs text-slate-400 leading-relaxed mb-4">{item.description}</p>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between items-center text-[11px] font-mono text-slate-400">
-                        <span>Learning Curve</span>
-                        <span className="text-accent-electric">{item.progress}%</span>
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-accent-electric/15 border border-accent-electric/30 flex items-center justify-center text-accent-electric group-hover:scale-110 transition duration-300">
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <div className="w-full h-1.5 rounded-full bg-dark-800 overflow-hidden">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-dark-850 text-accent-electric border border-slate-800">
+                        {item.tag || 'In Progress'}
+                      </span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-white mb-2 group-hover:text-accent-electric transition">
+                      {item.name}
+                    </h4>
+
+                    <p className="text-xs text-slate-300/90 leading-relaxed mb-4">
+                      {item.description}
+                    </p>
+
+                    {/* Progress Indicator */}
+                    <div className="space-y-1.5 pt-2 border-t border-slate-800/80">
+                      <div className="flex justify-between text-[11px] font-mono">
+                        <span className="text-slate-400">Learning Progress</span>
+                        <span className="text-accent-electric font-semibold">{item.progress}%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-dark-900 rounded-full overflow-hidden border border-slate-800">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-accent-purple to-accent-electric"
+                          className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all duration-1000"
                           style={{ width: `${item.progress}%` }}
                         />
                       </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* =========================================================================
+            CATEGORY 3: FUTURE LEARNING GOALS
+        ========================================================================= */}
+        {(filter === 'all' || filter === 'future') && (
+          <div>
+            <div className="flex items-center justify-between pb-3 mb-6 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-pink-500 shadow-[0_0_12px_rgba(236,72,153,0.8)]" />
+                <h3 className="text-xl font-bold text-white tracking-tight">
+                  Future Learning Goals
+                </h3>
+                <span className="text-xs font-mono text-pink-400 px-2 py-0.5 rounded bg-pink-500/10 border border-pink-500/20">
+                  Upcoming Roadmap
+                </span>
+              </div>
+              <span className="text-xs font-mono text-slate-400">
+                {skillsData.futureGoals?.length || 0} Target Milestones
+              </span>
+            </div>
+
+            <div className="p-4 rounded-xl bg-pink-500/5 border border-pink-500/20 mb-6 flex items-start gap-3">
+              <Compass className="w-5 h-5 text-pink-400 shrink-0 mt-0.5" />
+              <p className="text-xs text-slate-300 leading-relaxed">
+                <strong className="text-pink-300 font-semibold">Clear Distinction:</strong> The technologies below represent my structured learning roadmap toward becoming a full-stack developer. They are upcoming educational goals and are <span className="underline decoration-pink-400 underline-offset-2">not</span> presented as client-ready commercial experience.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {skillsData.futureGoals?.map((goal, index) => {
+                const Icon = iconMap[goal.icon] || Sparkles;
+                return (
+                  <div
+                    key={index}
+                    className="p-6 rounded-2xl border border-dashed border-slate-700/80 hover:border-pink-500/60 bg-dark-900/60 hover:bg-dark-850/80 group transition duration-300 relative"
+                  >
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-110 transition duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        <span>Upcoming</span>
+                      </span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-white mb-2 group-hover:text-pink-300 transition">
+                      {goal.name}
+                    </h4>
+
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {goal.description}
+                    </p>
+
+                    <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center gap-2 text-[11px] text-pink-400/90 font-mono">
+                      <Target className="w-3.5 h-3.5" />
+                      <span>Roadmap Target</span>
                     </div>
                   </div>
                 );
@@ -252,4 +362,3 @@ export default function Skills() {
     </section>
   );
 }
-

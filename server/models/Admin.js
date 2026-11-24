@@ -7,6 +7,7 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Admin name is required'],
       trim: true,
+      default: 'Wasi Ullah',
     },
     email: {
       type: String,
@@ -21,6 +22,37 @@ const adminSchema = new mongoose.Schema(
       required: [true, 'Admin password is required'],
       minlength: [6, 'Password must be at least 6 characters long'],
       select: false, // Do not return password by default
+    },
+    professionalTitle: {
+      type: String,
+      trim: true,
+      default: 'WordPress Developer | Web Designer | Full Stack Developer in Progress',
+    },
+    location: {
+      type: String,
+      trim: true,
+      default: 'Peshawar, Pakistan',
+    },
+    shortIntro: {
+      type: String,
+      trim: true,
+      default:
+        "Hi, I'm Wasi Ullah, a passionate web developer and Computer Science student. I specialize in WordPress website design and development. I am continuously improving my development skills and exploring modern web technologies. Currently, I am learning React.js to build dynamic, interactive, and modern web applications.",
+    },
+    currentLearningTech: {
+      type: String,
+      trim: true,
+      default: 'React.js',
+    },
+    futureGoals: {
+      type: [String],
+      default: [
+        'Advanced React.js',
+        'Node.js',
+        'Express.js',
+        'MongoDB',
+        'Full-Stack Development',
+      ],
     },
     createdAt: {
       type: Date,
@@ -49,4 +81,3 @@ adminSchema.methods.matchPassword = async function (enteredPassword) {
 
 const Admin = mongoose.model('Admin', adminSchema);
 export default Admin;
-

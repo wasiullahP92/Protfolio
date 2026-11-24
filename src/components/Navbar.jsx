@@ -16,7 +16,7 @@ export default function Navbar({ onOpenCV }) {
       }
 
       // Active section observer
-      const sections = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'contact'];
+      const sections = ['home', 'about', 'skills', 'education', 'training', 'journey', 'experience', 'projects', 'contact'];
       const scrollPos = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -40,8 +40,10 @@ export default function Navbar({ onOpenCV }) {
     { name: 'Home', href: '#home', id: 'home' },
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Experience', href: '#experience', id: 'experience' },
     { name: 'Education', href: '#education', id: 'education' },
+    { name: 'Training', href: '#training', id: 'training' },
+    { name: 'Journey', href: '#journey', id: 'journey' },
+    { name: 'Experience', href: '#experience', id: 'experience' },
     { name: 'Projects', href: '#projects', id: 'projects' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];

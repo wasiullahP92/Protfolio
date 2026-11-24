@@ -18,6 +18,7 @@ import skillRoutes from './routes/skillRoutes.js';
 import experienceRoutes from './routes/experienceRoutes.js';
 import educationRoutes from './routes/educationRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
+import trainingRoutes from './routes/trainingRoutes.js';
 
 // Setup file paths
 const __filename = fileURLToPath(import.meta.url);
@@ -111,7 +112,13 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/experience', experienceRoutes);
 app.use('/api/education', educationRoutes);
+app.use('/api/trainings', trainingRoutes);
 app.use('/api/messages', messageRoutes);
+
+// Profile shortcut for easy frontend consumption
+app.use('/api/profile', (req, res) => {
+  res.redirect(307, '/api/auth/profile-public');
+});
 
 // Error Handling Middlewares
 app.use(notFound);

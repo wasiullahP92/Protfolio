@@ -5,11 +5,13 @@ import {
   logoutAdmin,
   updateAdminProfile,
   updateAdminPassword,
+  getPublicProfile,
 } from '../controllers/authController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+router.get('/profile-public', getPublicProfile);
 router.post('/login', loginAdmin);
 router.get('/me', protect, getAdminProfile);
 router.post('/logout', logoutAdmin);
@@ -17,4 +19,5 @@ router.put('/profile', protect, updateAdminProfile);
 router.put('/password', protect, updateAdminPassword);
 
 export default router;
+
 

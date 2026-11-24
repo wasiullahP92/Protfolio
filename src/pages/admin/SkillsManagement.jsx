@@ -31,7 +31,7 @@ export default function SkillsManagement() {
   const [editingSkill, setEditingSkill] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    category: 'Core Competency',
+    category: 'Current Skills',
     level: 85,
     icon: 'Globe',
   });
@@ -59,7 +59,7 @@ export default function SkillsManagement() {
     setEditingSkill(null);
     setFormData({
       name: '',
-      category: 'Core Competency',
+      category: 'Current Skills',
       level: 85,
       icon: 'Globe',
     });
@@ -245,12 +245,11 @@ export default function SkillsManagement() {
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-dark-850 border border-slate-700 text-xs text-white focus:outline-none focus:border-accent-purple"
                 >
-                  <option value="Core Competency">Core Competency</option>
-                  <option value="Expanding Stack">Expanding Stack</option>
-                  <option value="CMS & Development">CMS & Development</option>
-                  <option value="UI / UX & Layout">UI / UX & Layout</option>
-                  <option value="Operations & Care">Operations & Care</option>
-                  <option value="Productivity">Productivity</option>
+                  <option value="Current Skills">Current Skills (Established Competencies)</option>
+                  <option value="Learning">Learning (Technologies in Progress)</option>
+                  <option value="Future Learning Goals">Future Learning Goals (Roadmap Targets)</option>
+                  <option value="Core Competency">Core Competency (Legacy)</option>
+                  <option value="Expanding Stack">Expanding Stack (Legacy)</option>
                 </select>
               </div>
 

@@ -22,6 +22,21 @@ const educationSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    status: {
+      type: String,
+      trim: true,
+      default: 'Completed', // e.g. "Currently Studying" or "Completed"
+    },
+    location: {
+      type: String,
+      trim: true,
+      default: 'Peshawar, Pakistan',
+    },
+    field: {
+      type: String,
+      trim: true,
+      default: 'Computer Science',
+    },
     description: {
       type: String,
       required: [true, 'Description is required'],
@@ -39,4 +54,3 @@ const educationSchema = new mongoose.Schema(
 
 const Education = mongoose.model('Education', educationSchema);
 export default Education;
-

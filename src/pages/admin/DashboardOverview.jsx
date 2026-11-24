@@ -5,6 +5,7 @@ import {
   Sparkles,
   Wrench,
   Briefcase,
+  BookOpen,
   MessageSquare,
   ArrowRight,
   Plus,
@@ -18,6 +19,7 @@ export default function DashboardOverview() {
   const [projects, setProjects] = useState([]);
   const [skills, setSkills] = useState([]);
   const [experience, setExperience] = useState([]);
+  const [trainings, setTrainings] = useState([]);
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(null);
 
@@ -26,11 +28,12 @@ export default function DashboardOverview() {
       setLoading(true);
       setError(null);
       try {
-        const [projRes, skillRes, expRes, msgRes] = await Promise.allSettled([
+        const [projRes, skillRes, expRes, msgRes, trainRes] = await Promise.allSettled([
           api.getProjects(),
           api.getSkills(),
           api.getExperience(),
           api.getMessages(),
+          api.getTrainings(),
         ]);
 
         if (projRes.status === 'fulfilled' && projRes.value?.data) {
@@ -44,6 +47,9 @@ export default function DashboardOverview() {
         }
         if (msgRes.status === 'fulfilled' && msgRes.value?.data) {
           setMessages(msgRes.value.data);
+        }
+        if (trainRes.status === 'fulfilled' && trainRes.value?.data) {
+          setTrainings(trainRes.value.data);
         }
       } catch (err) {
         setError('Could not load some dashboard metrics from backend.');

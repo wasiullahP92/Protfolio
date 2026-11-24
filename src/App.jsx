@@ -7,8 +7,10 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
-import Experience from './components/Experience';
 import Education from './components/Education';
+import Training from './components/Training';
+import LearningJourney from './components/LearningJourney';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -22,6 +24,7 @@ import DashboardOverview from './pages/admin/DashboardOverview';
 import ProjectsManagement from './pages/admin/ProjectsManagement';
 import AddProject from './pages/admin/AddProject';
 import SkillsManagement from './pages/admin/SkillsManagement';
+import TrainingManagement from './pages/admin/TrainingManagement';
 import ExperienceManagement from './pages/admin/ExperienceManagement';
 import EducationManagement from './pages/admin/EducationManagement';
 import MessagesManagement from './pages/admin/MessagesManagement';
@@ -40,8 +43,10 @@ function PublicPortfolio() {
         <Hero onOpenCV={() => setIsCVOpen(true)} />
         <About onOpenCV={() => setIsCVOpen(true)} />
         <Skills />
-        <Experience />
         <Education />
+        <Training />
+        <LearningJourney />
+        <Experience />
         <Projects />
         <Contact />
       </main>
@@ -80,6 +85,7 @@ export default function App() {
             <Route path="projects/new" element={<AddProject />} />
             <Route path="projects/edit/:id" element={<AddProject />} />
             <Route path="skills" element={<SkillsManagement />} />
+            <Route path="training" element={<TrainingManagement />} />
             <Route path="experience" element={<ExperienceManagement />} />
             <Route path="education" element={<EducationManagement />} />
             <Route path="messages" element={<MessagesManagement />} />
