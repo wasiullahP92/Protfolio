@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { 
   UserCheck, 
   GraduationCap, 
@@ -11,6 +12,19 @@ import {
 } from 'lucide-react';
 
 export default function About({ onOpenCV }) {
+  const cardsRef = useRef(null);
+
+  useEffect(() => {
+    if (!cardsRef.current) return;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      cardsRef.current.children,
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out', delay: 0.1 }
+    );
+  }, []);
   const highlights = [
     {
       title: "Motivated & Hardworking",
@@ -129,7 +143,7 @@ export default function About({ onOpenCV }) {
           </div>
 
           {/* Right Column: 4 Strategic Highlight Cards */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div ref={cardsRef} className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (

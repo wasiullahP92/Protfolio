@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -26,10 +28,42 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
+// Security Headers with Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
+
 // Middleware: Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Global API Rate Limiter (Protection against DoS / abuse)
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 400,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Too many requests from this IP address. Please try again later.',
+  },
+});
+app.use('/api', apiLimiter);
+
+// Auth Rate Limiter (Brute-force protection on login)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 40,
+  message: {
+    success: false,
+    message: 'Too many authentication attempts. Please try again in 15 minutes.',
+  },
+});
+app.use('/api/auth/login', authLimiter);
 
 // Middleware: CORS
 const allowedOrigins = [
@@ -87,15 +121,7 @@ const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB and start listening
 const startServer = async () => {
-  try {
-    await connectDB();
-    await seedDatabase();
-  } catch (err) {
-    console.warn(`[Warning] Could not connect to local MongoDB (${err.message}).`);
-    console.warn(`[Tip] Update MONGO_URI in server/.env with your MongoDB Atlas or local connection string.`);
-  }
-
-  // Start HTTP server
+  // Start HTTP server immediately
   if (process.env.NODE_ENV !== 'test') {
     app.listen(PORT, () => {
       console.log(`\n==================================================`);
@@ -105,9 +131,19 @@ const startServer = async () => {
       console.log(`==================================================\n`);
     });
   }
+
+  try {
+    await connectDB();
+    await seedDatabase();
+  } catch (err) {
+    console.warn(`[Warning] Database initialization issue: ${err.message}`);
+  }
 };
 
-startServer();
+const isTesting = process.env.NODE_ENV === 'test' || (process.argv[1] && process.argv[1].includes('test'));
+if (!isTesting) {
+  startServer();
+}
 
 export default app;
 

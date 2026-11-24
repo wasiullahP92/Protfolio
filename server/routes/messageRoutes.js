@@ -20,3 +20,4 @@ router.route('/:id/read')
   .put(protect, markMessageRead);
 
 export default router;
+

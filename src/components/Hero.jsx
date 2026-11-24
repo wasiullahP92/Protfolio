@@ -11,6 +11,10 @@ export default function Hero({ onOpenCV }) {
   const visualRef = useRef(null);
 
   useEffect(() => {
+    // Respect user reduced-motion preference
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     const ctx = gsap.context(() => {
       // Intro timeline
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -169,8 +173,17 @@ export default function Hero({ onOpenCV }) {
                 {/* Developer Avatar Placeholder */}
                 <div className="relative w-full h-full rounded-2xl bg-dark-850 flex flex-col items-center justify-center p-6 text-center border border-slate-700/40 overflow-hidden">
                   <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-accent-violet to-accent-electric p-1 shadow-glow-combo mb-4">
-                    <div className="w-full h-full rounded-full bg-dark-900 flex items-center justify-center">
-                      <span className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-white via-purple-200 to-accent-electric">
+                    <div className="w-full h-full rounded-full bg-dark-900 overflow-hidden flex items-center justify-center">
+                      <img
+                        src="/wasi-profile.jpg"
+                        alt="Wasi Ullah"
+                        className="w-full h-full object-cover object-top"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      <span className="hidden text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-white via-purple-200 to-accent-electric">
                         WU
                       </span>
                     </div>

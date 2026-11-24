@@ -303,6 +303,88 @@ async function runTests() {
     });
     assert(deleteEduRes.status === 200, 'DELETE /api/education/:id deletes education');
 
+    console.log('\n--- 7. MESSAGES & CONTACT FORM API ---');
+    // Public contact message submission
+    const postMsgRes = await fetch(`${baseUrl}/api/messages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Client Test Name',
+        email: 'client@company.com',
+        subject: 'WordPress Project Quote Inquiry',
+        message: 'Looking for a WordPress developer to build our business website.',
+      }),
+    });
+    const msgData = await postMsgRes.json();
+    assert(postMsgRes.status === 201 && Boolean(msgData.data._id), 'POST /api/messages delivers message to database');
+    const msgId = msgData.data._id;
+
+    // Get messages as admin
+    const getMsgsRes = await fetch(`${baseUrl}/api/messages`, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    const allMsgs = await getMsgsRes.json();
+    assert(getMsgsRes.status === 200 && Array.isArray(allMsgs.data), 'GET /api/messages retrieves messages for admin');
+
+    // Mark message as read
+    const readMsgRes = await fetch(`${baseUrl}/api/messages/${msgId}/read`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({ isRead: true }),
+    });
+    assert(readMsgRes.status === 200, 'PUT /api/messages/:id/read marks message status');
+
+    // Delete message
+    const deleteMsgRes = await fetch(`${baseUrl}/api/messages/${msgId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+    assert(deleteMsgRes.status === 200, 'DELETE /api/messages/:id deletes message');
+
+    console.log('\n--- 8. ADMIN SETTINGS & SECURITY ---');
+    // Update admin profile
+    const updateProfileRes = await fetch(`${baseUrl}/api/auth/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({
+        name: 'Wasi Ullah (Updated)',
+        email: 'wasiwebsolution@gmail.com',
+      }),
+    });
+    const updatedProfileData = await updateProfileRes.json();
+    assert(updateProfileRes.status === 200 && updatedProfileData.admin.name === 'Wasi Ullah (Updated)', 'PUT /api/auth/profile updates admin credentials');
+
+    // Update admin password
+    const updatePassRes = await fetch(`${baseUrl}/api/auth/password`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({
+        currentPassword: 'AdminSecurePass123!',
+        newPassword: 'AdminSecurePass123!New',
+      }),
+    });
+    assert(updatePassRes.status === 200, 'PUT /api/auth/password updates admin password');
+
+    // Verify login with new password
+    const newLoginRes = await fetch(`${baseUrl}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: 'wasiwebsolution@gmail.com',
+        password: 'AdminSecurePass123!New',
+      }),
+    });
+    assert(newLoginRes.status === 200, 'POST /api/auth/login authenticates with updated password');
+
     console.log('\n========================================');
     console.log(`TEST SUMMARY: ${passed} Passed, ${failed} Failed`);
     console.log('========================================\n');

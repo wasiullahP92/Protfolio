@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Eye, Sparkles, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { projectsData as fallbackProjects } from '../data/portfolioData';
@@ -57,10 +58,24 @@ export default function Projects() {
   }, []);
 
   const categories = ['All', 'WordPress', 'E-Commerce', 'Web Design'];
+  const gridRef = useRef(null);
 
   const filteredProjects = activeCategory === 'All'
     ? projects
     : projects.filter((p) => p.category.toLowerCase() === activeCategory.toLowerCase());
+
+  // Lightweight GSAP animation on category or projects change
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      gridRef.current.children,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' }
+    );
+  }, [activeCategory, projects.length]);
 
   const handleOpenModal = (project) => {
     setSelectedProject(project);
@@ -112,7 +127,7 @@ export default function Projects() {
         </div>
 
         {/* Dynamic Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
